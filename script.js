@@ -1,3 +1,12 @@
+let display = document.querySelector("#display");
+let buttons = document.querySelectorAll(".number, .operator");
+let clearButton = document.querySelector("#clear");
+let equalsButton = document.querySelector("#equals");
+
+let expression = {};
+let displayValue = "";
+
+
 function add(a, b) { return a + b; }
 function subtract(a, b) { return a - b; }
 function multiply(a, b) { return a * b; }
@@ -7,7 +16,11 @@ function divide(a, b) {
     }
     return a / b;
 }
-function operate(operator, a, b) {switch (operator) {
+function operate(operator, a, b) {
+    a = parseFloat(a);
+    b = parseFloat(b);
+
+    switch (operator) {
         case "+":
             return add(a, b);
         case "-":
@@ -18,3 +31,12 @@ function operate(operator, a, b) {switch (operator) {
             return divide(a, b);
     }
 }
+function updateDisplay() {
+    display.textContent = displayValue;
+}
+function clear() {
+    displayValue = "0";
+    expression = {};
+    updateDisplay();
+}
+
