@@ -75,5 +75,6 @@ span{
 }
 
 .not-allowed{
-    cursor: not-allowed;
+    background-color: transparent;
+    box-shadow: 0 0;
 }
