@@ -14,6 +14,19 @@ body{
     margin: auto;
     box-shadow: 10px 10px;
 }
+
+#display{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 209, 209);
+    height: 80px;
+    width: 330px;
+    margin-bottom: 10px;
+    border: 4px solid black;
+    font-size: 40px;
+}
+
 .buttons{
     display: grid;
     grid-template-columns:1fr 1fr 1fr 1fr;
@@ -37,17 +50,6 @@ body{
     box-shadow: 2px 2px;
 }
 
-#display{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(209, 209, 209);
-    height: 80px;
-    width: 330px;
-    margin-bottom: 10px;
-    border: 4px solid black;
-    font-size: 40px;
-}
 
 .style-A{
     background-color: rgb(5, 66, 210);
@@ -61,7 +63,7 @@ body{
     background-color: rgb(255, 98, 0);
 }
 
-span{
+span, img{
     margin: auto;
     font-size: 25px;
 }
@@ -72,9 +74,4 @@ span{
 
 .operator:active, .number:active{
     color: rgb(197, 200, 202);
-}
-
-.not-allowed{
-    background-color: transparent;
-    box-shadow: 0 0;
 }
