@@ -39,4 +39,3 @@ function clear() {
     expression = {};
     updateDisplay();
 }
-
