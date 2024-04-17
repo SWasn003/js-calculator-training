@@ -13,7 +13,6 @@ body{
     padding: 20px;
     margin: auto;
     box-shadow: 10px 10px;
-
 }
 .buttons{
     display: grid;
@@ -39,11 +38,15 @@ body{
 }
 
 #display{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgb(209, 209, 209);
     height: 80px;
     width: 330px;
     margin-bottom: 10px;
     border: 4px solid black;
+    font-size: 40px;
 }
 
 .style-A{
