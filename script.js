@@ -1,15 +1,17 @@
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll(".number, .operator");
+const dot_button = document.querySelector("#dot");
 const clear_button = document.querySelector("#clear");
+const delete_button = document.querySelector("#delete");
 const equals_button = document.querySelector("#equals");
 
 let expression = [];
 let display_value = "0";
 let last_number = "";
+let override = true;
 
 
-function add(a, b) { 
-    return a + b; }
+function add(a, b) { return a + b; }
 function subtract(a, b) { return a - b; }
 function multiply(a, b) { return a * b; }
 function divide(a, b) {
@@ -33,54 +35,128 @@ function operate(operator, a, b) {
             return divide(a, b);
     }
 }
-function updateDisplay() {
-    display.textContent = display_value;
+function calculate() {
+    let result = operate(expression[1], +expression[0], +expression[2]);
+    if (result === "ERR_DIV_ZERO") {
+        expression = [];
+        override = true;
+        return "ERROR: you can't divide by zero!";
+    }
+    result = Math.round(result * 100) / 100;
+    expression = [result];
+    last_number = `${result}`;
+    display_value = `${result}`;
+
+    return result;
 }
+
+
+// ### Event Handlers ###
 function clear() {
     expression = [];
     display_value = "0";
     last_number = "";
+    override = true;
     updateDisplay();
 }
-
-function calculate() {
-    if (expression.length === 3) {
-        let result = operate(expression[1], expression[0], expression[2]);
-        
-        if (result === "ERR_DIV_ZERO") {
-            display_value = "ERROR: you can't divide by zero!";
-            expression = [];
-            updateDisplay();
-            return;
-        }
-        display_value = Math.round(result * 100) / 100;
-        expression = [result];
-        last_number = "";
-        updateDisplay();
+function updateDisplay() {
+    console.log(`
+    Expr: ${expression}
+    Last: ${last_number}
+    Disp: ${display_value}
+    Overr: ${override}
+    `);
+    display.textContent = display_value;
+}
+function handleClick(button) {
+    if (button.classList.contains("number")) {
+        handleNumberClick(button.textContent.trim());
     }
+    else 
+    if (button.classList.contains("operator")) {
+        handleOperatorClick(button.textContent.trim());
+    }
+    display_value += button.textContent.trim();
+    updateDisplay();
+}
+function handleNumberClick(number) {
+    if (override) {
+        expression.pop();
+        display_value = "";
+        last_number = "";
+        override = false;
+    }
+    if (last_number !== "") expression.pop(); // in case I am still typing the number
+
+    last_number += number;
+    expression.push(last_number);
+    updateDisplay();
+}
+function handleOperatorClick(operator) {
+    if (override) override = false;
+
+    if (expression.length === 3) {
+        calculate();
+    }
+    if (expression.length > 0) {
+        if (last_number === "") {
+            expression.pop(); // in case last click was an operator
+            display_value = display_value.slice(0, -1);
+        }
+        expression.push(operator);
+    }
+    else expression.push(0, operator);
+
+    last_number = "";
+    updateDisplay();
+}
+function handleDotClick() {
+    if (override) override = false;
+    if (last_number.toString().indexOf(".") === -1 && (last_number !== "" || expression.length === 0)) {
+        last_number += ".";
+        display_value += ".";
+    }
+    if (last_number !== "") {
+        expression.pop();
+        expression.push(last_number);
+    }
+
+    updateDisplay();
+}
+function handleDeleteClick() {
+    if (last_number.toString().length > 1 && +last_number > 0) {
+        last_number = last_number.toString().slice(0, -1);
+        expression[expression.length - 1] = last_number;
+    }
+    else
+    if (last_number < 0 && last_number > -10) {
+        last_number = last_number.toString().slice(0, -2);
+        display_value = display_value.toString().slice(0, -2);
+        expression.pop();
+    }
+    else {
+        expression.pop();
+        last_number = +expression[expression.length - 1] || "";
+    }
+
+    override = false;
+    display_value = display_value.toString().slice(0, -1);
+    updateDisplay();
+}
+function handleEqualsClick() {
+    if (expression.length === 3) {
+        display_value = calculate();
+        override = true;
+    }
+    updateDisplay();
 }
 
 
 // ### Event Listeners ###
 buttons.forEach(button => {
-    button.addEventListener("click", () => {
-        if (button.classList.contains("operator")) {
-            expression.push(last_number); // fixme: if last_number is empty, it will push an empty string
-            if (expression.length === 3) calculate(); // calculate if 3 elements in expression
-            if (expression.length === 2) expression.pop(); // replace operator
-            expression.push(button.textContent);
-        }
-        else 
-        if (button.classList.contains("number")) {
-            if ( display_value === "0" ) display_value = "";
-            last_number += button.textContent;
-        }
-        display_value += button.textContent;
-        updateDisplay();
-    });
+    button.addEventListener("click", () => handleClick(button));
 });
+dot_button.addEventListener("click", handleDotClick);
 clear_button.addEventListener("click", clear);
-equals_button.addEventListener("click", () => {
-    expression.push(last_number); //fixme: if last_number is empty, it will push an empty string
-    calculate();
-});
+delete_button.addEventListener("click", handleDeleteClick);
+equals_button.addEventListener("click", () => handleEqualsClick());

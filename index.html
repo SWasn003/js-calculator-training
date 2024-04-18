@@ -4,35 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="calculator">
-        <div id="display"></div>
-        <div class="buttons">
-            <div class="number style-A" id="clear"> <span>AC</span> </div>
-            <div class="operator style-A"> <img src="./delete-button.svg" alt="delete-button" width="30px" height="30px" > </div>
-            <div class="operator style-A"> <span>%</span> </div>
-            <div class="operator style-C"> <span>/</span></div>
-            <div class="number style-B"> <span>7</span></div>
-            <div class="number style-B"> <span>8</span> </div>
-            <div class="number style-B"> <span>9</span></div>
-            <div class="number style-C"> <span>*</span></div>
-            <div class="number style-B"> <span>4</span> </div>
-            <div class="number style-B"> <span>5</span> </div>
-            <div class="number style-B"> <span>6</span> </div>
-            <div class="operator style-C"> <span>-</span></div>
-            <div class="number style-B"> <span>1</span> </div>
-            <div class="number style-B"> <span>2</span></div>
-            <div class="number style-B"> <span>3</span> </div>
-            <div class="operator style-C"> <span>+</span></div>
-            <div class="number style-B"> <span>0</span></div>
-            <div class="number style-B"> <span>.</span></div>
-            <div class=""></div>
-            <div class="number style-C" id="equals"> <span>=</span> </div>
+      <div id="display">0</div>
+        <div class="buttons-grid">
+          <button class="style-A" id="clear"> <span>AC</span> </button>
+          <button class="style-A" id="delete"> <span class="fa-solid fa-delete-left"></span> </button>
+          <button class="number style-B"> <span>7</span></button>
+          <button class="number style-B"> <span>8</span> </button>
+          <button class="number style-B"> <span>9</span></button>
+          <button class="operator style-C"> <span>/</span></button>
+          <button class="number style-B"> <span>4</span> </button>
+          <button class="number style-B"> <span>5</span> </button>
+          <button class="number style-B"> <span>6</span> </button>
+          <button class="operator style-C"> <span>*</span></button>
+          <button class="number style-B"> <span>1</span> </button>
+          <button class="number style-B"> <span>2</span></button>
+          <button class="number style-B"> <span>3</span> </button>
+          <button class="operator style-C"> <span>-</span></button>
+          <button class="number style-B"> <span>0</span></button>
+          <button class="style-B" id="dot"> <span>.</span></button>
+          <button class="style-equals" id="equals"> <span>=</span> </button>
+          <button class="operator style-C"> <span>+</span></button>
+        </div>
+      </div>
     </div>
-    </div>
-	<script src="script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
