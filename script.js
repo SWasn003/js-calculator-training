@@ -38,9 +38,11 @@ function operate(operator, a, b) {
 function calculate() {
     let result = operate(expression[1], +expression[0], +expression[2]);
     if (result === "ERR_DIV_ZERO") {
-        expression = [];
-        override = true;
-        return "ERROR: you can't divide by zero!";
+        alert("ERROR: you can't divide by zero!");
+        expression.pop();
+        last_number = "";
+        display_value = display_value.slice(0, -1);
+        return display_value;
     }
     result = Math.round(result * 100) / 100;
     expression = [result];
