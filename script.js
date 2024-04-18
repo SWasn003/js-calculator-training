@@ -10,7 +10,7 @@ let display_value = "0";
 let last_number = "";
 let override = true;
 
-
+// ### Math Functions ###
 function add(a, b) { return a + b; }
 function subtract(a, b) { return a - b; }
 function multiply(a, b) { return a * b; }
@@ -52,8 +52,7 @@ function calculate() {
     return result;
 }
 
-
-// ### Event Handlers ###
+// ### UI Functions ###
 function clear() {
     expression = [];
     display_value = "0";
@@ -62,12 +61,6 @@ function clear() {
     updateDisplay();
 }
 function updateDisplay() {
-    console.log(`
-    Expr: ${expression}
-    Last: ${last_number}
-    Disp: ${display_value}
-    Overr: ${override}
-    `);
     display.textContent = display_value;
 }
 function handleClick(button) {
@@ -78,8 +71,6 @@ function handleClick(button) {
     if (button.classList.contains("operator")) {
         handleOperatorClick(button.textContent.trim());
     }
-    display_value += button.textContent.trim();
-    updateDisplay();
 }
 function handleNumberClick(number) {
     if (override) {
@@ -92,6 +83,8 @@ function handleNumberClick(number) {
 
     last_number += number;
     expression.push(last_number);
+    
+    display_value += number
     updateDisplay();
 }
 function handleOperatorClick(operator) {
@@ -110,6 +103,7 @@ function handleOperatorClick(operator) {
     else expression.push(0, operator);
 
     last_number = "";
+    display_value += operator;
     updateDisplay();
 }
 function handleDotClick() {
@@ -153,7 +147,6 @@ function handleEqualsClick() {
     updateDisplay();
 }
 
-
 // ### Event Listeners ###
 buttons.forEach(button => {
     button.addEventListener("click", () => handleClick(button));
@@ -162,3 +155,29 @@ dot_button.addEventListener("click", handleDotClick);
 clear_button.addEventListener("click", clear);
 delete_button.addEventListener("click", handleDeleteClick);
 equals_button.addEventListener("click", () => handleEqualsClick());
+
+window.addEventListener("keydown", (e) => {
+    if (e.key >= 0 && e.key <= 9) {
+        handleNumberClick(e.key);
+    }
+    else
+    if (e.key === ".") {
+        handleDotClick();
+    }
+    else
+    if (e.key === "Backspace") {
+        handleDeleteClick();
+    }
+    else
+    if (e.key === "Enter" || e.key === "=") {
+        handleEqualsClick();
+    }
+    else
+    if (e.key === "Escape") {
+        clear();
+    }
+    else
+    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") {
+        handleOperatorClick(e.key);
+    }
+});
